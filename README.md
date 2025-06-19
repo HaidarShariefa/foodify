@@ -20,19 +20,19 @@ A modern food ordering web application built with React, Tailwind CSS, Redux, Fi
 
 ## 📁 Project Structure
 
-foodify/
-├── public/
-├── src/
-│ ├── components/
-│ │ └── admin-components/
-│ ├── pages/
-│ ├── store/
-│ └── App.jsx
-├── .gitignore
-├── .env
-├── firebase.json
-├── package.json
-└── README.md
+- foodify/
+- ├── public/
+- ├── src/
+- │ ├── components/
+- │ │ └── admin-components/
+- │ ├── pages/
+- │ ├── store/
+- │ └── App.jsx
+- ├── .gitignore
+- ├── .env
+- ├── firebase.json
+- ├── package.json
+- └── README.md
 ## 🚀 Features
 
 - Admin Panel:
