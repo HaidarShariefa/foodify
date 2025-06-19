@@ -4,10 +4,10 @@ A modern food ordering web application built with React, Tailwind CSS, Redux, Fi
 
 ## 👨‍💻 Author
 
-Haidar Shariefa
-LinkedIn: https://www.linkedin.com/in/haidarshariefa
-email: haidarshariefa33451@gmail.com
-phone: +96178986316
+- Haidar Shariefa
+- LinkedIn: https://www.linkedin.com/in/haidarshariefa
+- email: haidarshariefa33451@gmail.com
+- phone: +96178986316
 
 ## 🔧 Tech Stack
 
