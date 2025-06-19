@@ -49,7 +49,7 @@ A modern food ordering web application built with React, Tailwind CSS, Redux, Fi
 ## 🛠️ Installation
 
 ```bash
-git clone https://github.com/your-username/foodify.git
+git clone https://github.com/HaidarShariefa/foodify.git
 cd foodify
 npm install
 npm run dev
