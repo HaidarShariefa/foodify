@@ -1,12 +1,55 @@
-# React + Vite
+# 🍔 Foodify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern food ordering web application built with React, Tailwind CSS, Redux, Firebase, and Vite. This project includes a complete admin dashboard for managing categories, items, and add-ons.
 
-Currently, two official plugins are available:
+## 👨‍💻 Author
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Haidar Shariefa
+LinkedIn: https://www.linkedin.com/in/haidarshariefa
+email: haidarshariefa33451@gmail.com
+phone: +96178986316
 
-## Expanding the ESLint configuration
+## 🔧 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React.js
+- Tailwind CSS
+- Redux Toolkit
+- React Router
+- Firebase (Firestore, Authentication, Hosting)
+- Vite
+
+## 📁 Project Structure
+
+foodify/
+├── public/
+├── src/
+│ ├── components/
+│ │ └── admin-components/
+│ ├── pages/
+│ ├── store/
+│ └── App.jsx
+├── .gitignore
+├── .env
+├── firebase.json
+├── package.json
+└── README.md
+## 🚀 Features
+
+- Admin Panel:
+  - Add/Edit/Delete Categories
+  - Add/Edit/Delete Menu Items
+  - Add/Edit/Delete Add-ons
+  - Link items to categories and add-ons
+  - View full categorized menu
+- Firebase Integration:
+  - Firestore database (CRUD)
+  - Firebase Auth (admin login)
+  - Firebase Hosting
+
+## 🛠️ Installation
+
+```bash
+git clone https://github.com/your-username/foodify.git
+cd foodify
+npm install
+npm run dev
