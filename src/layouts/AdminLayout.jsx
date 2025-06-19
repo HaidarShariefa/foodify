@@ -1,6 +1,21 @@
 import { Outlet, NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { categoriesActions } from "../store/CategoriesSlice";
+import { fetchCategories } from "../store/actions/categoryActions";
 
 export default function AdminLayout() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function loadCategories() {
+      const categories = await fetchCategories();
+      categories.forEach((cat) => dispatch(categoriesActions.addCategory(cat)));
+    }
+
+    loadCategories();
+  }, [dispatch]);
+
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-sky-600 text-white p-4">
