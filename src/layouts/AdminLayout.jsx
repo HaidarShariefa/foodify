@@ -2,7 +2,7 @@ import { Outlet, NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { categoriesActions } from "../store/CategoriesSlice";
-import { fetchCategories } from "../store/actions/categoryActions";
+import { fetchCategories } from "../firebase/actions/categoryActions";
 
 export default function AdminLayout() {
   const dispatch = useDispatch();
@@ -10,9 +10,7 @@ export default function AdminLayout() {
   useEffect(() => {
     async function loadCategories() {
       const categories = await fetchCategories();
-      categories.forEach((cat) => dispatch(categoriesActions.addCategory(cat)));
     }
-
     loadCategories();
   }, [dispatch]);
 

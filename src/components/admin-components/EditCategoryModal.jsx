@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateCategory } from "../../firebase/actions/categoryActions";
 
-export default function EditCategoryModal({ category, onClose, onSave }) {
+export default function EditCategoryModal({ category, onClose }) {
   const [name, setName] = useState(category.name);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(category.image);
@@ -13,13 +15,18 @@ export default function EditCategoryModal({ category, onClose, onSave }) {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onSave({
+
+    const updatedCategory = {
       id: category.id,
       name,
-      image: image ? URL.createObjectURL(image) : preview,
-    });
+      image: image || preview,
+      oldImagePath: category.image
+    };
+
+    await updateCategory(updatedCategory);
+    onClose();
   }
 
   return (

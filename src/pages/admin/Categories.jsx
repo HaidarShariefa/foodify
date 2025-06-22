@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { categoriesActions } from "../../store/CategoriesSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import {
+  addCategory,
+  deleteCategory,
+} from "../../firebase/actions/categoryActions";
 import EditCategoryModal from "../../components/admin-components/EditCategoryModal";
 import CategoryList from "../../components/admin-components/CategoryList";
 
@@ -11,29 +13,29 @@ export default function Categories() {
     image: null,
   });
   const [editingCategory, setEditingCategory] = useState(null);
-
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const categories = useSelector((state) => state.categories);
 
   //add category fn
-  function handleAddCategory(event) {
+  async function handleAddCategory(event) {
     event.preventDefault();
+    setLoading(true);
 
-    dispatch(
-      categoriesActions.addCategory({
-        id: nanoid(),
-        name: category.name,
-        image: URL.createObjectURL(category.image),
-      })
-    );
+    const newCategory = {
+      name: category.name,
+      image: category.image,
+    };
+
+    await addCategory(newCategory);
 
     setCategory({ name: "", image: null });
     event.target.reset();
+    setLoading(false);
   }
 
   //remove category fn
   function handleRemoveCategory(id) {
-    dispatch(categoriesActions.removeCategory(id));
+    deleteCategory(id);
   }
 
   return (
@@ -80,9 +82,10 @@ export default function Categories() {
             </div>
             <button
               type="submit"
+              disabled={loading}
               className="hover:bg-sky-600 hover:text-white px-4 py-2 rounded mt-4 bg-white text-sky-600 outline hover:outline-sky-600 transition outline-sky-600"
             >
-              Add Category
+              {loading ? "Adding..." : "Add Category"}
             </button>
           </form>
         </div>
@@ -100,10 +103,6 @@ export default function Categories() {
         <EditCategoryModal
           category={editingCategory}
           onClose={() => setEditingCategory(null)}
-          onSave={(updatedCategory) => {
-            dispatch(categoriesActions.updateCategory(updatedCategory));
-            setEditingCategory(null);
-          }}
         />
       )}
     </>
