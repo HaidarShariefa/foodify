@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addonActions } from "../../store/AddonsSlice";
+import { useSelector } from "react-redux";
+import { addAddon, removeAddon } from "../../firebase/actions/addonActions";
 import { nanoid } from "@reduxjs/toolkit";
 import AddonsList from "../../components/admin-components/AddonsList";
 import EditAddonModal from "../../components/admin-components/EditAddonModal";
@@ -14,32 +14,32 @@ export default function Addons() {
   });
 
   const [editingAddon, setEditingAddon] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const [showItemSelector, setShowItemSelector] = useState(false);
-
-  const dispatch = useDispatch();
 
   const addons = useSelector((state) => state.addons);
   const items = useSelector((state) => state.items);
   const categories = useSelector((state) => state.categories);
 
-  function handleAddAddon(event) {
+  async function handleAddAddon(event) {
     event.preventDefault();
+    setLoading(true);
 
-    dispatch(
-      addonActions.addAddon({
-        id: nanoid(),
-        name: addon.name,
-        price: Number(addon.price),
-        linkedItemsIds: addon.linkedItemsIds,
-      })
-    );
+    const newAddon = {
+      name: addon.name,
+      price: addon.price,
+      linkedItemsIds: addon.linkedItemsIds,
+    };
+
+    await addAddon(newAddon);
 
     setAddon({
       name: "",
-      price: '',
+      price: "",
       linkedItemsIds: [],
     });
+    event.target.reset();
+    setLoading(false);
   }
 
   function handleRemoveAddon(id) {

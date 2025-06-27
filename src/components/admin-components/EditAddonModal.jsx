@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
+import { updateAddon } from "../../firebase/actions/addonActions";
 import ItemSelectorModal from "./ItemSelectorModal";
 
 export default function EditAddonModal({ addon, onClose, onSave }) {
@@ -14,14 +14,18 @@ export default function EditAddonModal({ addon, onClose, onSave }) {
   const items = useSelector((state) => state.items);
   const categories = useSelector((state) => state.categories);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onSave({
+
+    const updatedAddon = {
       id: addon.id,
       name,
-      price: Number(price),
-      linkedItemsIds: linkedItemsIds,
-    });
+      price,
+      linkedItemsIds,
+    };
+
+    await updateAddon(updatedAddon);
+    onClose();
   }
 
   return (

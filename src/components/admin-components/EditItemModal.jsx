@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { updateItem } from "../../firebase/actions/itemActions";
 
-export default function EditItemModal({ item, onClose, onSave }) {
+export default function EditItemModal({ item, onClose }) {
   const [name, setName] = useState(item.name);
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState(item.price);
@@ -19,16 +20,20 @@ export default function EditItemModal({ item, onClose, onSave }) {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onSave({
+    const updatedItem = {
       id: item.id,
       name,
       description,
       price,
-      image: image ? URL.createObjectURL(image) : preview,
+      image: image || item.image,
       categoryId,
-    });
+      oldImagePath: item.image
+    };
+
+    await updateItem(updatedItem);
+    onClose();
   }
 
   return (

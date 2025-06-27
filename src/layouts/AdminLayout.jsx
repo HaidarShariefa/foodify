@@ -1,17 +1,20 @@
 import { Outlet, NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { categoriesActions } from "../store/CategoriesSlice";
 import { fetchCategories } from "../firebase/actions/categoryActions";
+import { fetchItems } from "../firebase/actions/itemActions";
+import { fetchAddons } from "../firebase/actions/addonActions";
 
 export default function AdminLayout() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    async function loadCategories() {
-      const categories = await fetchCategories();
+    async function loadData() {
+      await fetchCategories();
+      await fetchItems();
+      await fetchAddons();
     }
-    loadCategories();
+    loadData();
   }, [dispatch]);
 
   return (

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { updateCategory } from "../../firebase/actions/categoryActions";
 
 export default function EditCategoryModal({ category, onClose }) {

@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { itemActions } from "../../store/ItemsSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { addItem, removeItem } from "../../firebase/actions/itemActions";
 import ItemList from "../../components/admin-components/ItemList";
 import EditItemModal from "../../components/admin-components/EditItemModal";
 
@@ -14,6 +13,7 @@ export default function Items() {
     categoryId: null,
   });
   const [editingItem, setEditingItem] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const imageInputRef = useRef();
 
@@ -21,19 +21,19 @@ export default function Items() {
   const items = useSelector((state) => state.items);
   const categories = useSelector((state) => state.categories);
 
-  function handleAddItem(event) {
+  async function handleAddItem(event) {
     event.preventDefault();
+    setLoading(true);
 
-    dispatch(
-      itemActions.addItem({
-        id: nanoid(),
-        name: item.name,
-        description: item.description,
-        price: Number(item.price),
-        image: URL.createObjectURL(item.image),
-        categoryId: item.categoryId,
-      })
-    );
+    const newItem = {
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      categoryId: item.categoryId,
+      image: item.image,
+    };
+
+    await addItem(newItem);
 
     setItem({
       name: "",
@@ -43,10 +43,11 @@ export default function Items() {
       categoryId: "",
     });
     imageInputRef.current.value = "";
+    setLoading(false);
   }
 
   function handleRemoveItem(id) {
-    dispatch(itemActions.removeItem(id));
+    removeItem(id);
   }
 
   return (
@@ -143,9 +144,10 @@ export default function Items() {
             </div>
             <button
               type="submit"
+              disabled={loading}
               className="hover:bg-sky-600 hover:text-white px-4 py-2 rounded mt-4 bg-white text-sky-600 outline hover:outline-sky-600 transition outline-sky-600"
             >
-              Add Item
+              {loading ? "Adding..." : "Add Item"}
             </button>
           </form>
         </div>
@@ -162,10 +164,6 @@ export default function Items() {
         <EditItemModal
           item={editingItem}
           onClose={() => setEditingItem(null)}
-          onSave={(updatedItem) => {
-            dispatch(itemActions.updateItem(updatedItem));
-            setEditingItem(null);
-          }}
         />
       )}
     </>

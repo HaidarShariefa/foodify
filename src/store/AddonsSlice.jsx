@@ -6,6 +6,9 @@ const addonsSlice = createSlice({
   name: "addons",
   initialState,
   reducers: {
+    setAddons: (state, action) => {
+      return action.payload
+    },
     addAddon: (state, action) => {
       state.push(action.payload);
     },
