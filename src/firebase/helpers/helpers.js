@@ -10,7 +10,13 @@ export async function uploadImage(file, folder = "images") {
 }
 
 export function getPathFromURL(url) {
-  const decoded = decodeURIComponent(url);
-  const matches = decoded.match(/\/o\/(.*?)\?alt/);
-  return matches ? matches[1] : null;
+  try {
+    const decoded = decodeURIComponent(url);
+    const startIndex = decoded.indexOf("/o/") + 3;
+    const endIndex = decoded.indexOf("?alt=");
+    return decoded.slice(startIndex, endIndex);
+  } catch {
+    return null;
+  }
 }
+

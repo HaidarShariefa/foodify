@@ -41,6 +41,7 @@ export default function Categories() {
   return (
     <>
       <div className="w-full min-h-screen flex flex-col items-center">
+        <h2 className="text-2xl font-bold text-sky-700 text-center my-5">Manage Categories</h2>
         {/* Form div */}
         <div className="space-y-4 bg-gray-50 p-4 rounded-lg text-sky-600 shadow-xl/30 border border-sky-600 w-[50rem]">
           <h2 className="text-lg font-medium text-center bg-sky-600 text-gray-50 rounded">
@@ -70,7 +71,7 @@ export default function Categories() {
                   setCategory((prev) => ({ ...prev, image: e.target.files[0] }))
                 }
                 required
-                className="w-full p-2 border border-gray-300 rounded mt-1"
+                className="hover:bg-sky-600 hover:text-white px-4 py-2 rounded bg-white text-sky-600 outline hover:outline-sky-600 transition outline-sky-600"
               />
               {category.image && (
                 <img
@@ -83,7 +84,7 @@ export default function Categories() {
             <button
               type="submit"
               disabled={loading}
-              className="hover:bg-sky-600 hover:text-white px-4 py-2 rounded mt-4 bg-white text-sky-600 outline hover:outline-sky-600 transition outline-sky-600"
+              className="hover:bg-green-600 hover:text-white px-4 py-2 rounded mt-4 bg-white text-sky-600 outline hover:outline-green-600 transition outline-sky-600"
             >
               {loading ? "Adding..." : "Add Category"}
             </button>
