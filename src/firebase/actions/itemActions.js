@@ -34,7 +34,7 @@ export async function addItem(item) {
     const docRef = await addDoc(collection(db, "items"), {
       name: item.name,
       description: item.description,
-      price: item.price,
+      price: Number(item.price),
       categoryId: item.categoryId,
       image: imageURL,
     });
@@ -43,7 +43,7 @@ export async function addItem(item) {
         id: docRef.id,
         name: item.name,
         description: item.description,
-        price: item.price,
+        price: Number(item.price),
         categoryId: item.categoryId,
         image: imageURL,
       })

@@ -56,7 +56,9 @@ export default function Addons() {
   return (
     <>
       <div className="w-full min-h-screen flex flex-col items-center">
-        <h2 className="text-2xl font-bold text-sky-700 text-center my-5">Manage Addons</h2>
+        <h2 className="text-2xl font-bold text-sky-700 text-center my-5">
+          Manage Addons
+        </h2>
         {/* form div */}
         <div className="space-y-4 bg-gray-50 p-4 rounded-lg text-sky-600 shadow-xl/30 border border-sky-600 w-[50rem]">
           <h2 className="text-lg font-medium text-center bg-sky-600 text-gray-50 rounded">
@@ -107,7 +109,7 @@ export default function Addons() {
               type="submit"
               className="hover:bg-green-600 hover:text-white px-4 py-2 rounded mt-4 bg-white text-sky-600 outline hover:outline-green-600 transition outline-sky-600"
             >
-              Add Addon
+              {loading ? "Adding..." : "Add Addon"}
             </button>
           </form>
         </div>

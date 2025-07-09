@@ -5,6 +5,7 @@ import Items from "./pages/admin/Items";
 import Addons from "./pages/admin/Addons";
 import FullMenu from "./pages/admin/FullMenu";
 import Peripherals from "./pages/admin/Peripherals";
+import UserLayout from "./layouts/UserLayout";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       { path: "peripherals", element: <Peripherals /> },
       { path: "menu", element: <FullMenu /> },
     ],
+  },
+  {
+    path: "/",
+    element: <UserLayout />,
   },
 ]);
 

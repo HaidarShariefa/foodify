@@ -19,7 +19,7 @@ export async function fetchAddons() {
       ...doc.data(),
     }));
 
-    store.dispatch(addonActions.setAddons(items));
+    store.dispatch(addonActions.setAddons(addons));
   } catch (error) {
     console.error("Could not fetch addons", error);
   }
@@ -29,14 +29,14 @@ export async function addAddon(addon) {
   try {
     const docRef = await addDoc(collection(db, "addons"), {
       name: addon.name,
-      price: addon.price,
+      price: Number(addon.price),
       linkedItemsIds: addon.linkedItemsIds,
     });
     store.dispatch(
       addonActions.addAddon({
         id: docRef.id,
         name: addon.name,
-        price: addon.price,
+        price: Number(addon.price),
         linkedItemsIds: addon.linkedItemsIds,
       })
     );
@@ -61,14 +61,14 @@ export async function updateAddon(addon) {
     await updateDoc(docRef, {
       id: addon.id,
       name: addon.name,
-      price: addon.price,
+      price: Number(addon.price),
       linkedItemsIds: addon.linkedItemsIds,
     });
     store.dispatch(
       addonActions.updateAddon({
         id: docRef.id,
         name: addon.name,
-        price: addon.price,
+        price: Number(addon.price),
         linkedItemsIds: addon.linkedItemsIds,
       })
     );
