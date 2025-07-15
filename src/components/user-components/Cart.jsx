@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { cartActions } from "../../store/CartSlice";
 
 export default function Cart({ isOpen, onClose, children }) {
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function Cart({ isOpen, onClose, children }) {
 function CartContent({ onClose }) {
   const cartItems = useSelector((state) => state.cart);
   const allItems = useSelector((state) => state.items);
-  const allAddons = useSelector((state) => state.addons);
+  const dispatch = useDispatch();
 
   return (
     <div className="h-full overflow-y-auto p-4">
@@ -70,17 +71,14 @@ function CartContent({ onClose }) {
         ) : (
           cartItems.map((cartItem) => {
             const item = allItems.find((i) => i.id === cartItem.itemId);
-            const addons = cartItem.selectedAddons.map((addonId) =>
-              allAddons.find((a) => a.id === addonId)
-            );
+            const addons = cartItem.selectedAddons || [];
 
-            const itemPrice = Number(item?.price || 0);
+            const base = Number(cartItem.basePrice || 0);
             const addonsTotal = addons.reduce(
-              (sum, a) => sum + Number(a?.price || 0),
+              (sum, a) => sum + a.price * a.quantity,
               0
             );
-            const itemTotal = itemPrice + addonsTotal;
-            const total = itemTotal * cartItem.quantity;
+            const total = (base + addonsTotal) * cartItem.quantity;
 
             return (
               <div
@@ -96,16 +94,49 @@ function CartContent({ onClose }) {
                       ))}
                     </ul>
                   )}
-                  <p className="text-sm mt-1">Qty: {cartItem.quantity}</p>
                 </div>
                 <div className="text-right font-medium">
                   ${total.toFixed(2)}
+                  <div className="flex items-center justify-end gap-2 mt-2">
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          cartActions.decrementQuantity({ id: cartItem.id })
+                        )
+                      }
+                      className="px-2 py-1 bg-gray-200 rounded"
+                    >
+                      -
+                    </button>
+                    <span>{cartItem.quantity}</span>
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          cartActions.incrementQuantity({ id: cartItem.id })
+                        )
+                      }
+                      className="px-2 py-1 bg-gray-200 rounded"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })
         )}
       </div>
+      {cartItems.length > 0 && (
+        <div className="mt-6 flex justify-between text-lg font-semibold">
+          <span>Total:</span>
+          <span>
+            $
+            {cartItems
+              .reduce((sum, item) => sum + item.totalPrice, 0)
+              .toFixed(2)}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
