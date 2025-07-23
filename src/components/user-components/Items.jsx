@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchItems } from "../../firebase/actions/itemActions";
 import { fetchAddons } from "../../firebase/actions/addonActions";
-import { useDispatch } from "react-redux";
-import { cartActions } from "../../store/CartSlice";
 import AddonSelectionModal from "./AddonSelectionModal";
 
 export default function Items({ categories }) {
@@ -13,19 +11,6 @@ export default function Items({ categories }) {
 
   const items = useSelector((state) => state.items);
   const addons = useSelector((state) => state.addons);
-
-  const dispatch = useDispatch();
-
-  function handleAddToCart(item) {
-    dispatch(
-      cartActions.addItemToCart({
-        itemId: item.id,
-        itemPrice: item.price,
-        selectedAddons: [], // or list of addon IDs
-        addonsPrice: 0, // sum of selected addons' prices
-      })
-    );
-  }
 
   useEffect(() => {
     fetchItems();
@@ -122,14 +107,6 @@ export default function Items({ categories }) {
                     </p>
                   )}
                 </div>
-
-                {/* Add to Cart Button */}
-                <button
-                  onClick={() => handleAddToCart(addon)}
-                  className="text-sky-600 text-2xl hover:text-sky-800 transition"
-                >
-                  <FontAwesomeIcon icon={faCartPlus} />
-                </button>
               </li>
             ))}
           </ul>
