@@ -1,13 +1,14 @@
 import { useState } from "react";
 
-export default function CheckoutForm({ cartItems, onSubmit, onCancel }) {
+export default function CheckoutForm({ cartItems, onSubmit, onCancel, onFinish }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
 
     if (!name.trim() || !phone.trim()) return;
@@ -15,11 +16,12 @@ export default function CheckoutForm({ cartItems, onSubmit, onCancel }) {
     onSubmit({
       customerName: name,
       phoneNumber: phone,
+      address,
       notes,
       items: cartItems,
       createdAt: new Date().toISOString(),
     });
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
@@ -45,9 +47,21 @@ export default function CheckoutForm({ cartItems, onSubmit, onCancel }) {
           className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-black"
         />
       </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Address *</label>
+        <input
+          type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          required
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-black"
+        />
+      </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Notes (Optional)</label>
+        <label className="block text-sm font-medium mb-1">
+          Notes (Optional)
+        </label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -66,10 +80,10 @@ export default function CheckoutForm({ cartItems, onSubmit, onCancel }) {
         </button>
         <button
           type="submit"
-          disabled={!name.trim() || !phone.trim()}
+          disabled={!name.trim() || !phone.trim() || !address.trim()}
           className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 disabled:opacity-50"
         >
-          {loading? "Please Wait..." : "Place Order" }
+          {loading ? "Please Wait..." : "Place Order"}
         </button>
       </div>
     </form>
