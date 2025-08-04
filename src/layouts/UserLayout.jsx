@@ -1,4 +1,4 @@
-import { fetchPeripherals } from "../firebase/actions/peripheralsActions";
+import { fetchSettings } from "../firebase/actions/settingsActions";
 import { fetchCategories } from "../firebase/actions/categoryActions";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,9 +7,10 @@ import Banner from "../components/user-components/Banner";
 import Header from "../components/user-components/Header";
 import Items from "../components/user-components/Items";
 import Cart from "../components/user-components/Cart";
+import Footer from "../components/user-components/Footer";
 
 export default function UserLayout() {
-  const [peripherals, setPeripherals] = useState({
+  const [settings, setSettings] = useState({
     name: "",
     logo: null,
     banner: null,
@@ -22,11 +23,11 @@ export default function UserLayout() {
   useEffect(() => {
     async function loadData() {
       const data = {
-        peripherals: await fetchPeripherals(),
+        settings: await fetchSettings(),
         categories: await fetchCategories(),
       };
       if (data) {
-        setPeripherals(data.peripherals);
+        setSettings(data.settings);
       }
     }
 
@@ -36,8 +37,8 @@ export default function UserLayout() {
   return (
     <div className="w-full min-h-screen bg-gradient-to-bl from-blue-950 to-sky-300">
       <Header
-        name={peripherals.name}
-        logo={peripherals.logo}
+        name={settings.name}
+        logo={settings.logo}
         onCartClick={() => setCartOpen(true)}
       />
       <Cart isOpen={cartOpen} onClose={() => setCartOpen(false)}>
@@ -45,9 +46,10 @@ export default function UserLayout() {
         <p>Product 2</p>
         <p>Total: $99</p>
       </Cart>
-      <Banner banner={peripherals.banner} />
+      <Banner banner={settings.banner} />
       <Categories categories={categories} />
       <Items categories={categories} />
+      <Footer />
     </div>
   );
 }

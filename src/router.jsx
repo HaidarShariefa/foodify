@@ -4,7 +4,7 @@ import Categories from "./pages/admin/Categories";
 import Items from "./pages/admin/Items";
 import Addons from "./pages/admin/Addons";
 import FullMenu from "./pages/admin/FullMenu";
-import Peripherals from "./pages/admin/Peripherals";
+import Settings from "./pages/admin/Settings";
 import UserLayout from "./layouts/UserLayout";
 
 const router = createBrowserRouter([
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
       { path: "categories", element: <Categories /> },
       { path: "items", element: <Items /> },
       { path: "addons", element: <Addons /> },
-      { path: "peripherals", element: <Peripherals /> },
+      { path: "settings", element: <Settings /> },
       { path: "menu", element: <FullMenu /> },
     ],
   },

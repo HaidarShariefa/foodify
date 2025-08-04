@@ -31,8 +31,8 @@ export default function AdminLayout() {
           <NavLink to="addons" className="hover:underline">
             Manage Add-ons
           </NavLink>
-          <NavLink to="peripherals" className="hover:underline">
-            Manage Peripherals
+          <NavLink to="settings" className="hover:underline">
+            Manage Settings
           </NavLink>
           <NavLink to="menu" className="hover:underline">
             View Menu
